@@ -7,7 +7,7 @@ derived => input lenght
 
 (4) if start <= end contine else step (8)
 
-(2) pointer = (input length divided by 2) + 1
+(2) pointer = (end - start divided by 2) +1 // This is written from a 1 base array perspecive 
 
 (3) check if input[pointer] === target then  Return the pointer
 
@@ -46,23 +46,33 @@ const testCases: TestCase[] = [
 
 function binarySearch(array: number[], target: number): number {
   let pointer: number = -1
-
   let start: number = 0
-  let end: number = array.length - 1
+  let end: number = array.length
 
   while (start <= end) {
     pointer = Math.trunc(end - start / 2)
-
     if (target === array[pointer]) return pointer
     if (target > array[pointer]) start = pointer + 1
-    if (target < array[pointer]) end = pointer - 1
+    end = pointer - 1
   }
 
   return -1
 }
 
+function recursionSearch(array: number[], target: number) {
+  let pointer: number = -1
+  let start: number = 0
+  let end: number = array.length
+
+  pointer = Math.trunc(end - start / 2)
+  if (target === array[pointer]) return pointer
+  if (target > array[pointer])
+    return recursionSearch(array.slice(start + 1, end + 1), target)
+  else return recursionSearch(array.slice(start, end), target)
+}
+
 for (const testCase of testCases) {
-  const result = binarySearch(testCase.input, testCase.target)
+  const result = recursionSearch(testCase.input, testCase.target)
   if (result !== testCase.expected) {
     console.error(
       `Test case failed: Input: ${testCase.input}, Target: ${testCase.target}, Expected: ${testCase.expected}, Result: ${result}`
@@ -73,5 +83,3 @@ for (const testCase of testCases) {
     )
   }
 }
-
-export {}

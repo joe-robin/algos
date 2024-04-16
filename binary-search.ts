@@ -5,17 +5,17 @@ derived => input lenght
 
 (1) declare pointer = -1, start = 1, end = input length
 
-(4) if start <= end contine else step (8)
+(2) if start <= end contine else step (7)
 
-(2) pointer = (end - start divided by 2) +1 // This is written from a 1 base array perspecive 
+(3) pointer = start +  (end - start divided by 2) +1 continue // This is written from a 1 base array perspecive 
 
-(3) check if input[pointer] === target then  Return the pointer
+(4) check if input[pointer] === target then  Return the pointer
 
-(5) if target > input[pointer] start = pointer + 1  then step (2)
+(5) if target > input[pointer] start = pointer + 1  then step (3)
 
-(6) if target < input[pointer] end = pointer - 1 then step (2)
+(6) if target < input[pointer] end = pointer - 1 then step (3)
 
-(8) Not found return pointer
+(7) Not found return pointer
 
 */
 
@@ -44,10 +44,10 @@ const testCases: TestCase[] = [
   { input: [1, 4, 7, 10, 13, 16], target: 10, expected: 3 },
 ]
 
-function binarySearch(array: number[], target: number): number {
+function _binarySearch(array: number[], target: number): number {
   let pointer: number = -1
   let start: number = 0
-  let end: number = array.length
+  let end: number = array.length // Adding -1 here results in a infinite loop
 
   while (start <= end) {
     pointer = Math.trunc(end - start / 2)
@@ -71,8 +71,95 @@ function recursionSearch(array: number[], target: number) {
   else return recursionSearch(array.slice(start, end), target)
 }
 
+function search(nums: number[], target: number): number {
+  let infinityCheck = 0
+  let l = 0
+  let r = nums.length
+  let m = -1
+
+  while (l <= r) {
+    m = Math.floor((r - l) / 2)
+
+    if (target === nums[m]) return m
+
+    if (target > nums[m]) {
+      l = m + 1
+    }
+
+    if (target < nums[m]) {
+      r = m - 1
+    }
+    if (infinityCheck > 20) break
+    infinityCheck++
+  }
+
+  return -1
+}
+
+function binarySearch(array: number[], target) {
+  const l = array.length
+  let start = 0
+  let end = l - 1
+  let m = -1
+
+  let counter = 0
+
+  while (start <= end) {
+    m = Math.trunc((end - start) / 2)
+    if (array[m] === target) return m
+    else if (target > array[m]) start = m + 1
+    else if (target < array[m]) end = m - 1
+    else {
+      return -1
+    }
+  }
+
+  return -1
+}
+
+function bS(input: number[], t: number): number {
+  let l = 0
+  let r = input.length - 1
+  let m = -1
+
+  while (l <= r) {
+    m = l + Math.trunc((r - l) / 2)
+
+    if (input[m] === t) return m
+
+    if (t > input[m]) l = m + 1
+    else r = m - 1
+  }
+
+  return -1
+}
+
+function binarySearch__(arr, x) {
+  let l = 0
+  let r = arr.length - 1
+  let mid
+  while (r >= l) {
+    mid = l + Math.floor((r - l) / 2)
+
+    // If the element is present at the middle
+    // itself
+    if (arr[mid] == x) return mid
+
+    // If element is smaller than mid, then
+    // it can only be present in left subarray
+    if (arr[mid] > x) r = mid - 1
+    // Else the element can only be present
+    // in right subarray
+    else l = mid + 1
+  }
+
+  // We reach here when element is not
+  // present in array
+  return -1
+}
+
 for (const testCase of testCases) {
-  const result = recursionSearch(testCase.input, testCase.target)
+  const result = bS(testCase.input, testCase.target)
   if (result !== testCase.expected) {
     console.error(
       `Test case failed: Input: ${testCase.input}, Target: ${testCase.target}, Expected: ${testCase.expected}, Result: ${result}`
@@ -83,3 +170,5 @@ for (const testCase of testCases) {
     )
   }
 }
+
+// console.log(Math.trunc((5 - 2) / 2))

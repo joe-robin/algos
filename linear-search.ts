@@ -43,5 +43,3 @@ const result = testCases.map(item => {
   const searchResult = linearSearch(item.input, item.target)
   return searchResult === item.expected
 })
-
-export {}

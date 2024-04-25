@@ -44,7 +44,25 @@ const testCases: TestCase[] = [
   { input: [1, 4, 7, 10, 13, 16], target: 10, expected: 3 },
 ]
 
+// This worked even thought its wrong because if the target is at the first half of the array this will work like a linear search and search
+// every element from the end to the start
+// input: [ 2, 3, 4, 5, 7 ], target: 2
+// Math.trunc(end - start / 2):pointer 5
+// Math.trunc(end - start / 2):pointer 4
+// Math.trunc(end - start / 2):pointer 3
+// Math.trunc(end - start / 2):pointer 2
+// Math.trunc(end - start / 2):pointer 1
+// Math.trunc(end - start / 2):pointer 0
+// result:  0
+
+// input: [ 2, 3, 4, 5, 7 ], target: 7
+// Math.trunc(end - start / 2):pointer 5
+// Math.trunc(end - start / 2):pointer 4
+// result:  4
+
+// This is basicaly a reverse linear search
 function _binarySearch(array: number[], target: number): number {
+  console.log(array, target)
   let pointer: number = -1
   let start: number = 0
   let end: number = array.length // Adding -1 here results in a infinite loop
@@ -58,7 +76,7 @@ function _binarySearch(array: number[], target: number): number {
 
   return -1
 }
-
+// Bug
 function recursionSearch(array: number[], target: number) {
   let pointer: number = -1
   let start: number = 0
@@ -70,8 +88,8 @@ function recursionSearch(array: number[], target: number) {
     return recursionSearch(array.slice(start + 1, end + 1), target)
   else return recursionSearch(array.slice(start, end), target)
 }
-
-function search(nums: number[], target: number): number {
+// Bug
+function __search(nums: number[], target: number): number {
   let infinityCheck = 0
   let l = 0
   let r = nums.length
@@ -96,7 +114,8 @@ function search(nums: number[], target: number): number {
   return -1
 }
 
-function binarySearch(array: number[], target) {
+// Bug
+function __binarySearch(array: number[], target) {
   const l = array.length
   let start = 0
   let end = l - 1
@@ -117,7 +136,8 @@ function binarySearch(array: number[], target) {
   return -1
 }
 
-function bS(input: number[], t: number): number {
+// Correct
+function binarySearch(input: number[], t: number): number {
   let l = 0
   let r = input.length - 1
   let m = -1
@@ -126,20 +146,23 @@ function bS(input: number[], t: number): number {
     m = l + Math.trunc((r - l) / 2)
 
     if (input[m] === t) return m
-
     if (t > input[m]) l = m + 1
-    else r = m - 1
+    else if (t < input[m]) r = m - 1
+    else return -1
   }
 
   return -1
 }
+
+// const result = binarySearch([1, 3, 5, 7, 9], 5)
+// console.log('result: ', result)
 
 function binarySearch__(arr, x) {
   let l = 0
   let r = arr.length - 1
   let mid
   while (r >= l) {
-    mid = l + Math.floor((r - l) / 2)
+    mid = l + Math.floor((r - l) / 2) // Missed this every step of the way
 
     // If the element is present at the middle
     // itself
@@ -158,8 +181,9 @@ function binarySearch__(arr, x) {
   return -1
 }
 
+// if (false)
 for (const testCase of testCases) {
-  const result = bS(testCase.input, testCase.target)
+  const result = binarySearch(testCase.input, testCase.target)
   if (result !== testCase.expected) {
     console.error(
       `Test case failed: Input: ${testCase.input}, Target: ${testCase.target}, Expected: ${testCase.expected}, Result: ${result}`
@@ -170,5 +194,3 @@ for (const testCase of testCases) {
     )
   }
 }
-
-// console.log(Math.trunc((5 - 2) / 2))

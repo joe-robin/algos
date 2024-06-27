@@ -24,24 +24,203 @@ import { TestCase } from './types'
 const testCases: TestCase[] = [
   // Empty Array
   { input: [], target: 5, expected: -1 },
+
   // Single Element Array
   { input: [10], target: 10, expected: 0 },
+
   // Target at Midpoint
   { input: [1, 3, 5, 7, 9], target: 5, expected: 2 },
+
   // Target at Start
   { input: [5, 7, 9, 12, 15], target: 5, expected: 0 },
+
   // Target at End
   { input: [2, 4, 6, 8, 10], target: 10, expected: 4 },
+
   // Target Not Present
   { input: [3, 6, 9, 14, 18], target: 11, expected: -1 },
+
   // Negative Target
   { input: [-5, -2, 0, 3, 7], target: -8, expected: -1 },
+
   // Duplicate Values (First Occurrence)
   { input: [2, 3, 4, 5, 7], target: 2, expected: 0 },
+
   // Duplicate Values (Last Occurrence)
   { input: [3, 5, 5, 8, 10], target: 5, expected: 2 },
+
   // Odd Array Length
   { input: [1, 4, 7, 10, 13, 16], target: 10, expected: 3 },
+
+  // Test Cases with Random Values
+  { input: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], target: 7, expected: 6 },
+  { input: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], target: 40, expected: 3 },
+  { input: [-10, -5, 0, 5, 10], target: 0, expected: 2 },
+  { input: [100, 200, 300, 400, 500], target: 200, expected: 1 },
+  { input: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], target: 11, expected: -1 },
+  {
+    input: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+    target: 95,
+    expected: -1,
+  },
+  { input: [-10, -5, 0, 5, 10], target: -15, expected: -1 },
+  { input: [100, 200, 300, 400, 500], target: 600, expected: -1 },
+  { input: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], target: -5, expected: -1 },
+  {
+    input: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+    target: -15,
+    expected: -1,
+  },
+
+  // Edge Cases
+  { input: [0], target: 0, expected: 0 },
+  { input: [0], target: -1, expected: -1 },
+  { input: [0], target: 1, expected: -1 },
+  { input: [-1, 1], target: 0, expected: -1 },
+  { input: [-1, 1], target: -1, expected: 0 },
+  { input: [-1, 1], target: 1, expected: 1 },
+  { input: [1, 3, 5, 7, 9], target: 8, expected: -1 },
+  { input: [1, 3, 5, 7, 9], target: -1, expected: -1 },
+  { input: [-9, -7, -5, -3, -1], target: -2, expected: -1 },
+  { input: [-9, -7, -5, -3, -1], target: -10, expected: -1 },
+  { input: [1, 3, 5, 7, 9], target: 3, expected: 1 },
+  { input: [1, 3, 5, 7, 9], target: 1, expected: 0 },
+  { input: [1, 3, 5, 7, 9], target: 9, expected: 4 },
+  { input: [1, 3, 5, 7, 9], target: 10, expected: -1 },
+  { input: [1, 3, 5, 7, 9], target: 0, expected: -1 },
+  { input: [-9, -7, -5, -3, -1], target: -3, expected: 3 },
+  { input: [-9, -7, -5, -3, -1], target: -9, expected: 0 },
+  { input: [-9, -7, -5, -3, -1], target: -1, expected: 4 },
+  { input: [-9, -7, -5, -3, -1], target: -11, expected: -1 },
+  { input: [-9, -7, -5, -3, -1], target: -4, expected: -1 },
+
+  // // Large Arrays
+  // {
+  //   input: Array.from({ length: 10000 }, (_, i) => i),
+  //   target: 9999,
+  //   expected: 9999,
+  // },
+  // {
+  //   input: Array.from({ length: 10000 }, (_, i) => i),
+  //   target: -1,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 10000 }, (_, i) => i),
+  //   target: 5000,
+  //   expected: 5000,
+  // },
+  // {
+  //   input: Array.from({ length: 10000 }, (_, i) => i),
+  //   target: 10000,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 10000 }, (_, i) => i),
+  //   target: 10001,
+  //   expected: -1,
+  // },
+
+  // // Large Random Arrays
+  // {
+  //   input: Array.from({ length: 10000 }, () =>
+  //     Math.floor(Math.random() * 10000)
+  //   ),
+  //   target: 9999,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 10000 }, () =>
+  //     Math.floor(Math.random() * 10000)
+  //   ),
+  //   target: -1,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 10000 }, () =>
+  //     Math.floor(Math.random() * 10000)
+  //   ),
+  //   target: 5000,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 10000 }, () =>
+  //     Math.floor(Math.random() * 10000)
+  //   ),
+  //   target: 10000,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 10000 }, () =>
+  //     Math.floor(Math.random() * 10000)
+  //   ),
+  //   target: 10001,
+  //   expected: -1,
+  // },
+
+  // // Performance Test Cases
+  // {
+  //   input: Array.from({ length: 1000000 }, (_, i) => i),
+  //   target: 999999,
+  //   expected: 999999,
+  // },
+  // {
+  //   input: Array.from({ length: 1000000 }, (_, i) => i),
+  //   target: -1,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 1000000 }, (_, i) => i),
+  //   target: 500000,
+  //   expected: 500000,
+  // },
+  // {
+  //   input: Array.from({ length: 1000000 }, (_, i) => i),
+  //   target: 1000000,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 1000000 }, (_, i) => i),
+  //   target: 1000001,
+  //   expected: -1,
+  // },
+
+  // // Large Random Arrays
+  // {
+  //   input: Array.from({ length: 1000000 }, () =>
+  //     Math.floor(Math.random() * 1000000)
+  //   ),
+  //   target: 999999,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 1000000 }, () =>
+  //     Math.floor(Math.random() * 1000000)
+  //   ),
+  //   target: -1,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 1000000 }, () =>
+  //     Math.floor(Math.random() * 1000000)
+  //   ),
+  //   target: 500000,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 1000000 }, () =>
+  //     Math.floor(Math.random() * 1000000)
+  //   ),
+  //   target: 1000000,
+  //   expected: -1,
+  // },
+  // {
+  //   input: Array.from({ length: 1000000 }, () =>
+  //     Math.floor(Math.random() * 1000000)
+  //   ),
+  //   target: 1000001,
+  //   expected: -1,
+  // },
 ]
 
 // This worked even thought its wrong because if the target is at the first half of the array this will work like a linear search and search
@@ -160,7 +339,7 @@ function binarySearch(input: number[], t: number): number {
 function binarySearch__(arr, x) {
   let l = 0
   let r = arr.length - 1
-  let mid
+  let mid = -1
   while (r >= l) {
     mid = l + Math.floor((r - l) / 2) // Missed this every step of the way
 

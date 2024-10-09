@@ -416,8 +416,25 @@ const binarySearch = (
   else return -1;
 };
 
+const __binarySearch = (
+  inputs: number[],
+  start: number,
+  end: number,
+  t: number
+) => {
+  const m = start + Math.floor((end - start) / 2);
+  const n = inputs[m];
+
+  if (end < start) return -1;
+
+  if (n === t) return m;
+  else if (n < t) return __binarySearch(inputs, m + 1, end, t);
+  else if (n > t) return __binarySearch(inputs, start, m - 1, t);
+  else return -1;
+};
+
 for (const testCase of testCases) {
-  const result = binarySearch(
+  const result = __binarySearch(
     testCase.input,
     0,
     testCase.input.length - 1,

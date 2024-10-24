@@ -30,7 +30,6 @@ function quickSort(numArr: number[], l: number, h: number) {
         swap(numArr, i, j);
       }
     }
-    console.log('i: ', i, 'j: ', j, 'pivotIdx: ', pivotIdx, 'numArr: ', numArr);
     swap(numArr, j, pivotIdx);
     return j;
   };
@@ -38,7 +37,6 @@ function quickSort(numArr: number[], l: number, h: number) {
   const pivotIdx = partition(numArr, l);
 
   if (pivotIdx > h) {
-    console.log('\npivotIdx: ', pivotIdx);
     quickSort(numArr, l, pivotIdx);
     quickSort(numArr, pivotIdx + 1, h);
   }

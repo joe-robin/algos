@@ -1,5 +1,3 @@
-from math import floor
-
 
 def test_binary_search(binary_search_func):
     # Test cases: (sorted_list, target, expected_index)
@@ -25,15 +23,14 @@ def test_binary_search(binary_search_func):
             print(f"Array: {arr}, Target: {target}")
 
 
-def binary_search(arr, target):
+def _binary_search(arr, target):
 
-    start = 0
-    end = len(arr) - 1
+    start: int = 0
+    end:int  = len(arr) - 1
     # print("start,end", start, end)
 
     while start <= end:
-        middle_idx = int(start + (end - start) / 2)
-        # print(middle_idx, "middle_idx")
+        middle_idx: int = start + (end - start) // 2
         # print(arr)
         # print(target, "\n")
         middle = arr[middle_idx]
@@ -47,8 +44,30 @@ def binary_search(arr, target):
     return -1
 
 
-test_binary_search(binary_search)
-# binary_search([1, 3, 5, 7, 9], 9)
 
-# val = 5 / 2
-# print(val)
+def binary_search(arr, target):
+
+    def binary_search_recursive(arr,target,start,end):
+        m = start + (end - start) // 2
+
+        if start > end:
+            return -1
+
+        if arr[m] == target:
+            return m
+
+        if arr[m] < target:
+            start = m + 1
+
+        if arr[m] > target:
+            end = m - 1
+
+        return binary_search_recursive(arr,target,start,end)
+    
+    start: int = 0
+    end:int  = len(arr) - 1
+    return binary_search_recursive(arr,target,start,end)
+    
+
+test_binary_search(binary_search)
+

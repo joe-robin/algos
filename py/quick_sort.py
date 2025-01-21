@@ -17,16 +17,54 @@
 #    
 #    return quicksort(left) + middle + quicksort(right)
 
-def quick_sort(arr):
+# def quick_sort(arr):
+#     
+#     if len(arr) <= 1:
+#         return arr
+# 
+#     pivot = arr[len(arr) // 2]
+# 
+#     left = []
+#     for i in arr:
+#         if(i < pivot):
+#             left.append(i)
+# 
+#     middle = []
+#     for i in arr:
+#         if i == pivot:
+#             middle.append(i)
+# 
+#     right = []
+#     for i in arr:
+#         if i > pivot:
+#             right.append(i)
+# 
+#     return quick_sort(left) + middle + quick_sort(right)
+
+def quick_sort(arr, low, high):
+    def partition(arr,low,high):
+        pivot = arr[high]
+        i = low - 1 
+
+        for j in range(low, high):
+            if arr[j] < pivot:
+                i += 1
+                arr[i], arr[j] = arr[j], arr[i]
+
+        arr[i+1], arr[high] = arr[high], arr[i+1]
+
+        return i+1
+
+    firt_pivot = partition(arr,low,high)
+
+    #left
+    partition(arr, low, firt_pivot -1)
+
+    #right
+    partition(arr,firt_pivot + 1, high)
+
     
-    if len(arr) <= 1:
-        return arr
 
-    pivot = arr[len(arr) // 2]
-
-    left = []
-
-    for i in arr
 
 def run_tests():
     """Runs test cases to verify quicksort implementation"""
@@ -70,7 +108,7 @@ def run_tests():
     ]
     
     for i, test in enumerate(test_cases, 1):
-        result = quicksort(test['input'].copy())  # Use copy to preserve original input
+        result = quick_sort(test['input'].copy(), 0 ,len(test['input']) -1)  # Use copy to preserve original input
         try:
             assert result == test['expected']
             print(f"Test {i} passed: {test['description']}")

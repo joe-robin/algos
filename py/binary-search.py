@@ -14,6 +14,7 @@ def test_binary_search(binary_search_func):
     ]
 
     for i, (arr, target, expected) in enumerate(test_cases):
+ 
         result = binary_search_func(arr, target)
         if result == expected:
             print(f"Test case {i + 1} passed!")
@@ -67,7 +68,29 @@ def binary_search(arr, target):
     start: int = 0
     end:int  = len(arr) - 1
     return binary_search_recursive(arr,target,start,end)
+
+def _binary_s_earch (arr,t):
+    start = 0
+    end = len(arr) - 1
+
+    while start <= end:
+        m = start + (end - start) // 2
+        
+        if arr[m] == t:
+            return m
+        elif arr[m] < t:
+            start = m+1
+        elif arr[m] > t:
+            end = m-1
+
+    return -1
+        
     
 
-test_binary_search(binary_search)
+test_binary_search(_binary_s_earch)
+
+
+
+
+    
 
